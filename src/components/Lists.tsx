@@ -40,12 +40,11 @@ const Lists = () => {
         setOpenParent(true)
     }
     const handleCloseModalParent = ():void => setOpenParent(false)
-
     const addParent = (data:FamilyMemberList):void => {
         if(modalType === 'submit' && addType === 'parent') setFamilyList([...familyList, data])
         if(modalType === 'update' && addType === 'parent') setFamilyList(familyList.map((family) => family.id === data.id ? family = data : family))
         if(modalType === 'submit' && addType === 'child') {
-            familyList[parentIndex].familyChild.push(data)      
+            setFamilyList(familyList.map((family, index) => index === parentIndex ? family = {...family, familyChild:[...family.familyChild, data]} : family ))   
          }
         handleCloseModalParent()
     }

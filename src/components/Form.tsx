@@ -27,7 +27,7 @@ const Form = (props:FormProps) => {
             name:fullName,
             description:description,
             position:position,
-            familyChild:[]
+            familyChild:modalType === 'update' ? updateData.familyChild : []
         })
         setFullName('')
         setPosition('')
@@ -41,6 +41,7 @@ const Form = (props:FormProps) => {
             setDescription(updateData.description)
         }
     }, [modalType])
+
     
   return (
     <Dialog open={open} onClose={close}>
