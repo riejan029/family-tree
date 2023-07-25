@@ -8,5 +8,6 @@ export interface FamilyMemberList {
 
 export interface ChildrenProps {
     familyChild:FamilyMemberList[];
-    updateChild:(childKey:number) => void
+    updateChild:(childKey:number) => void;
+    addChild:() => void;
 }

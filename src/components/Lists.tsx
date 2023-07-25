@@ -14,10 +14,11 @@ import DeleteButton from './DeleteButton';
 import UpdateButton from './UpdateButton';
 import MoreDetails from './MoreDetails';
 import Description from './Description';
-interface AddChildrenArgs {
+interface UpdateChildrenArgs {
     parentKey:number;
     childKey:number;
 }
+
 const Lists = () => {
     const [familyList, setFamilyList] = useState<FamilyMemberList[]>(familyMembersList)
     const [familyObject, setFamilyObject] = useState<FamilyMemberList>(familyMembersList[0])
@@ -25,11 +26,15 @@ const Lists = () => {
     const [openDesc, setOpenDesc] = useState<boolean>(false)
     const [desc, setDesc] = useState<string>('')
     const [modalType, setModalType] = useState<ModalType>('submit')
+    const [addType, setAddType] = useState<string>('parent')
+    const [parentIndex, setParentIndex] = useState<number>(0)
     const handleOpenModalParent = ():void => {
+        setAddType('parent')
         setModalType('submit')
         setOpenParent(true)
     } 
     const handleOpenUpdateModalParent = (data:FamilyMemberList) => {
+        setAddType('parent')
         setModalType('update')
         setFamilyObject(data)
         setOpenParent(true)
@@ -37,15 +42,18 @@ const Lists = () => {
     const handleCloseModalParent = ():void => setOpenParent(false)
 
     const addParent = (data:FamilyMemberList):void => {
-        if(modalType === 'submit') setFamilyList([...familyList, data])
-        if(modalType === 'update') setFamilyList(familyList.map((family) => family.id === data.id ? family = data : family))
+        if(modalType === 'submit' && addType === 'parent') setFamilyList([...familyList, data])
+        if(modalType === 'update' && addType === 'parent') setFamilyList(familyList.map((family) => family.id === data.id ? family = data : family))
+        if(modalType === 'submit' && addType === 'child') {
+            familyList[parentIndex].familyChild.push(data)      
+         }
         handleCloseModalParent()
     }
     const handleDeleteParent = (parentId:number):void => {
         setFamilyList(familyList.filter((list) => list.id !== parentId))
     }
 
-    const addChildren = (args:AddChildrenArgs):void => {
+    const updateChildren = (args:UpdateChildrenArgs):void => {
         const {parentKey, childKey} = args
         console.log(parentKey, childKey)
     }
@@ -56,6 +64,13 @@ const Lists = () => {
     }
     const closeMoreItem = ():void => {
         setOpenDesc(false)
+    }
+
+    const handleChildAdd = (index:number):void => {
+        setParentIndex(index)
+        setAddType('child')
+        setModalType('submit')
+        setOpenParent(true)
     }
   return (
     <Grid>
@@ -80,7 +95,7 @@ const Lists = () => {
                                     {family?.name}
                                 </ListItem>
                                 <Typography sx={{display:'flex', justifyContent:'center'}}>Children</Typography>
-                                <ChildrenList familyChild={family.familyChild} updateChild={(childKey) => addChildren({parentKey:family.id, childKey:childKey})} />
+                                <ChildrenList familyChild={family.familyChild} updateChild={(childKey) => updateChildren({parentKey:family.id, childKey:childKey})} addChild={() => handleChildAdd(parentKey)} />
                             </Stack>
                         </Stack>
                     
