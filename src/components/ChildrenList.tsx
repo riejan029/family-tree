@@ -8,6 +8,7 @@ import Grid from '@mui/material/Grid'
 const ChildrenList = (props:ChildrenProps) => {
     const {familyChild, updateChild} = props
     if(!Array.isArray(familyChild)) return <></>
+    if(familyChild.length === 0) return <div style={{display:'flex', justifyContent:'center', fontSize:'bold'}}>No Children</div>
     return (
         <Stack direction={'column'} py={3}>
             <Grid container>

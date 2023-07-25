@@ -40,7 +40,7 @@ const Form = (props:FormProps) => {
             setPosition(updateData.position)
             setDescription(updateData.description)
         }
-    }, [modalType, updateData.name,updateData.position, updateData.description ])
+    }, [modalType])
     
   return (
     <Dialog open={open} onClose={close}>
