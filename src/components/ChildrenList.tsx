@@ -9,7 +9,7 @@ const ChildrenList = (props:ChildrenProps) => {
     const {familyChild, updateChild} = props
     if(!Array.isArray(familyChild)) return <></>
     return (
-        <Stack direction={'column'}>
+        <Stack direction={'column'} py={3}>
             <Grid container>
             {familyChild.map((child, index) =>{
                 return (
@@ -18,7 +18,10 @@ const ChildrenList = (props:ChildrenProps) => {
                         <ListItem sx={{display:'flex', justifyContent:'center'}}>
                             {child?.name}
                         </ListItem>
-                        <Button onClick={() => updateChild(child.id)}>Update Child</Button>
+                        <div style={{display:'flex', justifyContent:'center'}}>
+                            <Button onClick={() => updateChild(child.id)}>Update Child</Button>
+                        </div>
+                        
                         </Grid>
                 )
             })} 
