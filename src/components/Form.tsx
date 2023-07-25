@@ -4,7 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { FamilyMemberList } from './types';
 
 export type ModalType = 'submit' | 'update'
@@ -21,9 +21,27 @@ const Form = (props:FormProps) => {
     const [fullName, setFullName ] = useState<string>('')
     const [position, setPosition ] = useState<string>('')
     const [description, setDescription] = useState<string>('')
+    const finishedData = ():void => {
+        confirmData({
+            id:modalType === 'update' ? updateData.id : id(),
+            name:fullName,
+            description:description,
+            position:position,
+            familyChild:[]
+        })
+        setFullName('')
+        setPosition('')
+        setDescription('')
+    }
     const id = () => Math.random()
-    console.log(updateData)
-    console.log(modalType === 'update' ? updateData.id : id())
+    useEffect(() => {
+        if(modalType === 'update'){
+            setFullName(updateData.name)
+            setPosition(updateData.position)
+            setDescription(updateData.description)
+        }
+    }, [modalType, updateData.name,updateData.position, updateData.description ])
+    
   return (
     <Dialog open={open} onClose={close}>
         <Grid container gap={2}>
@@ -40,13 +58,7 @@ const Form = (props:FormProps) => {
 
         <Stack direction='row'>
             <Button onClick={closeModal}>Cancel</Button>
-            <Button onClick={() => confirmData({
-                id:modalType === 'update' ? updateData.id : id(),
-                name:fullName,
-                description:description,
-                position:position,
-                familyChild:[]
-            })}>{modalType === 'submit'?'Submit' : 'Update' }</Button>
+            <Button onClick={finishedData}>{modalType === 'submit'?'Submit' : 'Update' }</Button>
         </Stack>
     </Dialog>
     

@@ -21,13 +21,11 @@ const Lists = () => {
     const [familyObject, setFamilyObject] = useState<FamilyMemberList>(familyMembersList[0])
     const [openParent, setOpenParent] = useState<boolean>(false)
     const [modalType, setModalType] = useState<ModalType>('submit')
-    console.log(familyList)
     const handleOpenModalParent = ():void => {
         setModalType('submit')
         setOpenParent(true)
     } 
     const handleOpenUpdateModalParent = (data:FamilyMemberList) => {
-        console.log(data)
         setModalType('update')
         setFamilyObject(data)
         setOpenParent(true)
@@ -35,7 +33,6 @@ const Lists = () => {
     const handleCloseModalParent = ():void => setOpenParent(false)
 
     const addParent = (data:FamilyMemberList):void => {
-        console.log(data)
         if(modalType === 'submit') setFamilyList([...familyList, data])
         if(modalType === 'update') setFamilyList(familyList.map((family) => family.id === data.id ? family = data : family))
         handleCloseModalParent()
