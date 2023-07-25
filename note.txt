@@ -1,0 +1,5 @@
+Hi, I created a simple CRUD application based on the instructions,
+I used ReactTs for this, and MUI Library. This app contains the CRUD functionality
+in the parent section so you can still the CRUD in the app,
+I did not finish the children part as I don't have enough time and needed to travel to manila
+but for the parent the CRUD is complete, you can check it out thank you.
